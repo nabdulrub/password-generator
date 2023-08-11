@@ -1,30 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { checkBoxes } from "../data/checkBoxData";
 
-const PasswordStrength = () => {
-  const [checkboxState, setCheckboxState] = useState({
-    checkbox1: checkBoxes[0].checked,
-    checkbox2: checkBoxes[0].checked,
-    checkbox3: checkBoxes[0].checked,
-    checkbox4: checkBoxes[0].checked,
-  });
+const PasswordStrength = ({ length }) => {
+  const [strengthColor, setStrengthColor] = useState("");
 
   const calculateStrength = () => {
-    let strength = 0;
+    if (length <= 3) return "Weak";
+    if (length <= 8) return "Medium";
+    if (length <= 15) return "Good";
+    if (length >= 15) return "Strong";
 
-    if (checkboxState.checkbox1) strength++;
-    if (checkboxState.checkbox2) strength++;
-    if (checkboxState.checkbox3) strength++;
-    if (checkboxState.checkbox4) strength++;
+    return length;
+  };
 
-    if (strength === 0) return "Weak";
-    if (strength === 1) return "Medium";
-    if (strength >= 2) return "Strong";
-
-    return strength;
+  const changeColor = () => {
+    if (length < 3) return setStrengthColor("border-red-500 bg-red-500");
+    if (length <= 8) return setStrengthColor("border-yellow-500 bg-yellow-500");
+    if (length <= 15)
+      return setStrengthColor("border-orange-500 bg-orange-500");
+    if (length >= 15) return setStrengthColor("border-green-500 bg-green-500");
   };
 
   const strengthLevel = calculateStrength();
+
+  useEffect(() => {
+    changeColor();
+  }, [length]);
 
   return (
     <div className="flex justify-between items-center bg-background-clr px-6 py-4">
@@ -32,16 +33,26 @@ const PasswordStrength = () => {
       <div className="flex gap-4 items-center justify-center text-text-clr">
         <h3 className="uppercase font-bold">{strengthLevel}</h3>
         <div className="flex gap-2 items-center justify-center">
-          {checkBoxes.map((checkbox, index) => (
-            <span
-              key={index}
-              className={`w-[10px] h-[30px] border-2 ${
-                checkboxState[`checkbox${index + 1}`]
-                  ? "border-strength-clr bg-strength-clr"
-                  : "border-white bg-transparent"
-              }`}
-            ></span>
-          ))}
+          <span className={`w-[10px] h-[30px] border-2 ${strengthColor}`} />
+          <span
+            className={`w-[10px] h-[30px] border-2 ${
+              length > 3 || length > 8
+                ? `${strengthColor}`
+                : "border-white bg-transparent"
+            }`}
+          />
+          <span
+            className={`w-[10px] h-[30px] border-2 ${
+              length > 8 || length > 15
+                ? `${strengthColor}`
+                : "border-white bg-transparent"
+            }`}
+          />
+          <span
+            className={`w-[10px] h-[30px] border-2 ${
+              length > 15 ? `${strengthColor}` : "border-white bg-transparent"
+            }`}
+          />
         </div>
       </div>
     </div>

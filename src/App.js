@@ -3,7 +3,7 @@ import "./App.css";
 import GeneratedPassword from "./components/GeneratedPassword";
 import CharacterSlider from "./components/CharacterSlider";
 import OptionCheckbox from "./components/OptionCheckbox";
-import { CheckboxContainer } from "./components/Containers";
+import { CheckboxContainer } from "./components/ReusableTags";
 import PasswordStrength from "./components/PasswordStrength";
 import GenerateButton from "./components/GenerateButton";
 import { checkBoxes } from "./data/checkBoxData";
@@ -26,7 +26,6 @@ function App() {
     );
 
     setPassword(generatedPass);
-    console.log(password);
   };
 
   return (
@@ -50,7 +49,7 @@ function App() {
                 />
               ))}
             </CheckboxContainer>
-            <PasswordStrength />
+            <PasswordStrength length={length} />
             <GenerateButton onClick={generate} />
           </div>
         </div>

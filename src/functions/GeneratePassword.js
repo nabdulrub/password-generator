@@ -23,7 +23,7 @@ export const generatePassword = (
   // Catch errors incase the password length is 0.
   if (
     !includeLowercase &&
-    !includeLowercase &&
+    !includeUppercase &&
     !includeNumbers &&
     !includeSymbols
   ) {
