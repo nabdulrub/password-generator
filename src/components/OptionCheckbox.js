@@ -42,9 +42,9 @@ const CheckBox = styled.input`
   }
 `;
 
-const OptionCheckbox = ({ checkboxName, checked }) => {
+const OptionCheckbox = ({ checkboxName, checked, ...props }) => {
   return (
-    <div className="flex gap-4 text-text-clr items-center">
+    <div {...props} className="flex gap-4 text-text-clr items-center">
       <CheckBox type="checkbox" defaultChecked={checked} />
       <span className="checkmark"></span>
       <h2>{checkboxName}</h2>

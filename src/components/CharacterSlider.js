@@ -49,8 +49,7 @@ const Slider = styled.input`
   }
 `;
 
-const CharacterSlider = () => {
-  const [length, setLength] = useState(0);
+const CharacterSlider = ({ setLength, length }) => {
 
   return (
     <>

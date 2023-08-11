@@ -6,18 +6,28 @@ import OptionCheckbox from "./components/OptionCheckbox";
 import { CheckboxContainer } from "./components/Containers";
 import PasswordStrength from "./components/PasswordStrength";
 import GenerateButton from "./components/GenerateButton";
-
-import { generatePassword } from "./components/functions/GeneratePassword";
-
-const checkBoxes = [
-  { name: "Include Uppercase Letters", checked: true },
-  { name: "Include Lowercase Letters", checked: true },
-  { name: "Include Numbers", checked: true },
-  { name: "Include Symbols", checked: false },
-];
+import { checkBoxes } from "./data/checkBoxData";
+import { generatePassword } from "./functions/GeneratePassword";
+import { useState } from "react";
 
 function App() {
-  const generatedPass = generatePassword();
+  const [password, setPassword] = useState("Generate Password");
+  const [length, setLength] = useState(10);
+
+  const generate = () => {
+    setPassword("");
+
+    const generatedPass = generatePassword(
+      length,
+      checkBoxes[0].checked,
+      checkBoxes[1].checked,
+      checkBoxes[2].checked,
+      checkBoxes[3].checked
+    );
+
+    setPassword(generatedPass);
+    console.log(password);
+  };
 
   return (
     <div>
@@ -27,22 +37,22 @@ function App() {
         </h1>
 
         <div className="w-full flex flex-col items-center max-w-[400px] gap-6 ">
-          <GeneratedPassword />
+          <GeneratedPassword generatedPassword={password} />
           <div className="w-full bg-container-clr p-5 flex flex-col gap-6">
-            <CharacterSlider />
+            <CharacterSlider setLength={setLength} length={length} />
             <CheckboxContainer>
               {checkBoxes.map((box, idx) => (
                 <OptionCheckbox
                   checkboxName={box.name}
                   key={idx}
                   checked={box.checked}
+                  onChange={(e) => (box.checked = e.target.checked)}
                 />
               ))}
             </CheckboxContainer>
             <PasswordStrength />
-            <GenerateButton onClick={() => console.log(generatedPass)} />
+            <GenerateButton onClick={generate} />
           </div>
-          
         </div>
       </body>
     </div>

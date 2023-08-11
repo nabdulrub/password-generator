@@ -1,9 +1,9 @@
 export const generatePassword = (
-  Passwordlength = 10,
-  includeUppercase = true,
-  includeLowercase = true,
-  includeNumbers = true,
-  includeSymbols = true
+  Passwordlength,
+  includeUppercase,
+  includeLowercase,
+  includeNumbers,
+  includeSymbols
 ) => {
   // Defined all letters, numbers & symbols that will be used for passwords.
   const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
@@ -21,7 +21,12 @@ export const generatePassword = (
   if (includeSymbols) allowedChars += symbols;
 
   // Catch errors incase the password length is 0.
-  if (allowedChars.length === 0) {
+  if (
+    !includeLowercase &&
+    !includeLowercase &&
+    !includeNumbers &&
+    !includeSymbols
+  ) {
     throw new Error("No character types selected for password generation.");
   }
 
@@ -31,6 +36,7 @@ export const generatePassword = (
   // Loops and adds a character to the password variable each loop, the loop ends based on the length parameter.
   for (let i = 0; i < Passwordlength; i++) {
     const randomIndex = Math.floor(Math.random() * allowedChars.length);
+
     password += allowedChars[randomIndex];
   }
 
