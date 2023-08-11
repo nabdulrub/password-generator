@@ -7,6 +7,8 @@ import { CheckboxContainer } from "./components/Containers";
 import PasswordStrength from "./components/PasswordStrength";
 import GenerateButton from "./components/GenerateButton";
 
+import { generatePassword } from "./components/functions/GeneratePassword";
+
 const checkBoxes = [
   { name: "Include Uppercase Letters", checked: true },
   { name: "Include Lowercase Letters", checked: true },
@@ -15,6 +17,8 @@ const checkBoxes = [
 ];
 
 function App() {
+  const generatedPass = generatePassword();
+
   return (
     <div>
       <body className="flex flex-col items-center justify-center bg-background-clr gap-8 p-4">
@@ -22,7 +26,7 @@ function App() {
           Password Generator
         </h1>
 
-        <div className="w-full flex flex-col items-center max-w-[400px] gap-6">
+        <div className="w-full flex flex-col items-center max-w-[400px] gap-6 ">
           <GeneratedPassword />
           <div className="w-full bg-container-clr p-5 flex flex-col gap-6">
             <CharacterSlider />
@@ -36,8 +40,9 @@ function App() {
               ))}
             </CheckboxContainer>
             <PasswordStrength />
-            <GenerateButton />
+            <GenerateButton onClick={() => console.log(generatedPass)} />
           </div>
+          
         </div>
       </body>
     </div>
